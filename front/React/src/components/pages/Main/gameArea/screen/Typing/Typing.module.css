@@ -1,3 +1,10 @@
 .roTerm {
   outline: none;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.roTerm > span {
+  font-size: 22px;
+  font-weight: lighter;
 }
