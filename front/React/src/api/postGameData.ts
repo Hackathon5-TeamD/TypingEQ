@@ -3,15 +3,15 @@ const Url = `http://localhost:5000`;
 
 export const postGameData = async (result: {
   user_id: number;
-  accuracy: number;
+  accuracy_value: number;
   wpm: number;
 }) => {
-  const { accuracy, wpm, user_id } = result;
+  const { accuracy_value, wpm, user_id } = result;
   const data = {
     user_id: user_id,
-    accuracy: accuracy,
+    accuracy_value: accuracy_value,
     wpm: wpm,
-    played_at: new Date(),
+    played_at_date: Date.now(),
   };
   try {
     const res = await axios.post(`${Url}/result`, data);

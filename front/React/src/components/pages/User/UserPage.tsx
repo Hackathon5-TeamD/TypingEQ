@@ -24,6 +24,8 @@ export const UserPage = () => {
     console.log(data.user_id);
     setLoading(true);
     const res = await getUserRecord(data.user_id);
+    console.log(res);
+
     // サーバーから取ってきたユーザーデータ配列をページごとに違うstate(配列)に入れる
     setRecordArr(res);
     setLoading(false);

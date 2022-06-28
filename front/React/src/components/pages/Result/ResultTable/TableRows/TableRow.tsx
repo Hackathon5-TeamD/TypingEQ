@@ -1,16 +1,17 @@
 import { Table } from "semantic-ui-react";
-import { mockData } from "../../../../../types/ResultType";
+import { recordData } from "../../../../../types/UserType";
 import styles from "./TableRow.module.css";
 
 type Props = {
   idx: number;
   currentPage: number;
-  data: mockData;
+  data: recordData;
 };
 
 export const TableRow = (props: Props) => {
   const { idx, currentPage, data } = props;
-  const { id, user_name, played_at, accuracy, wpm } = data;
+  const { id, user_name, played_at_date, accuracy, wpm } = data;
+  const date = new Date(played_at_date).toLocaleDateString();
 
   return (
     <Table.Row>
@@ -21,7 +22,7 @@ export const TableRow = (props: Props) => {
       )}
 
       <Table.Cell className={styles.cell}>{user_name}</Table.Cell>
-      <Table.Cell className={styles.cell}>{played_at}</Table.Cell>
+      <Table.Cell className={styles.cell}>{date}</Table.Cell>
       <Table.Cell className={styles.cell}>{accuracy} %</Table.Cell>
       <Table.Cell className={styles.cell}>{wpm} WPM</Table.Cell>
     </Table.Row>

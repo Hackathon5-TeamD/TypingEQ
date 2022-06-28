@@ -1,3 +1,4 @@
+from cmath import log
 from flask import Blueprint, request, jsonify
 from model import Result, app
 
@@ -18,10 +19,15 @@ def get_my_result(user_id):
             {
                 "user_name":i.users.user_name,
                 "user_id":i.user_id,
-                "accuracy_value":i.accuracy_value,
+                "accuracy":i.accuracy_value,
                 "wpm":i.wpm,
                 "played_at_date":i.played_at_date
             }
             for i in users
         ]
-        return jsonify(sorted(my_data, key=lambda x: x['played_at_date'],reverse=True)[0:5])
+        print(my_data)
+        if len(my_data) > 5:
+            sortedData = sorted(my_data, key=lambda x: x['played_at_date'],reverse=True)[0:5]
+        else:
+            sortedData = my_data
+        return jsonify(sortedData)

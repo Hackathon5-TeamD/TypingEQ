@@ -18,15 +18,17 @@ result_module = Blueprint("result_module", __name__,url_prefix="/result")
 @result_module.route("/1", methods=["GET"])
 @cross_origin(supports_credentials=True)
 def get_join_result():
-    results = db.session.query(Result, Result.accuracy_value, Result.user_id, Person.user_name, Person.user_id).join(Person,Result.user_id == Person.user_id) 
+    results = db.session.query(Result, Result.accuracy_value, Result.wpm, Result.user_id, Result.played_at_date, Person.user_name, Person.user_id).join(Person,Result.user_id == Person.user_id) 
     data = [
         {
         "user_name" : i.user_name,
-        "accuracy_value" : i.accuracy_value,
+        "accuracy" : i.accuracy_value,
+        "played_at_date": i.played_at_date,
+        "wpm": i.wpm
         }
         for i in results
     ]
-    return jsonify(sorted(data, key=lambda x: x['accuracy_value'],reverse=True)[0:10])
+    return jsonify(sorted(data, key=lambda x: x['accuracy'],reverse=True)[0:10])
 
 
 #ランキング11~20まで出力

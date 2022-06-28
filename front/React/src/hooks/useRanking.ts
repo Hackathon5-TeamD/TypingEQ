@@ -1,10 +1,10 @@
 import { getRanking } from "../api/GetDataAPI";
-import { mockData } from "../types/ResultType";
+import { recordData } from "../types/UserType";
 import { useState } from "react";
 
 export const useRanking = () => {
-  const [rankingArr1, setRankingArr1] = useState<mockData[]>([]);
-  const [rankingArr2, setRankingArr2] = useState<mockData[]>([]);
+  const [rankingArr1, setRankingArr1] = useState<recordData[]>([]);
+  const [rankingArr2, setRankingArr2] = useState<recordData[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
 
