@@ -12,14 +12,21 @@ import { userLoginState } from "../Register/Register";
 
 export const UserPage = () => {
   const [recordArr, setRecordArr] = useState<recordData[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
 
   // ログイン情報を使う
   const data = useRecoilValue(userLoginState);
+  console.log(data);
+
   // サーバーにユーザーデータ配列を取りに行く関数
   const fetch = async () => {
-    const res = await getUserRecord();
+    // ここで取得したいユーザーのidを関数へ渡す。useReciolValueのidを指定
+    console.log(data.user_id);
+    setLoading(true);
+    const res = await getUserRecord(data.user_id);
     // サーバーから取ってきたユーザーデータ配列をページごとに違うstate(配列)に入れる
     setRecordArr(res);
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -37,7 +44,7 @@ export const UserPage = () => {
           <div className={styles.container}>
             <Header />
 
-            {recordArr.length !== 0 ? (
+            {!loading ? (
               <>
                 <SubTitle>User name : {data.user_name}</SubTitle>
                 <GameRecord recordArr={recordArr} />

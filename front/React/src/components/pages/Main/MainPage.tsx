@@ -7,7 +7,7 @@ import useTypingGame from "react-typing-game-hook";
 import { useGame } from "../../../hooks/useGame";
 import { useState, useEffect } from "react";
 import { StartAlert } from "./StartAlert/StartAlert";
-import { postGameData } from "../../../api/postGameData";
+import { postGameData } from "../../../api/PostGameData";
 import { useRecoilValue } from "recoil";
 import { userLoginState } from "../Register/Register";
 
@@ -66,12 +66,14 @@ export const MainPage = () => {
       const convertedAccuracy = parseFloat(accuracy.toFixed(1));
       // accuracy, wpmをオブジェクトにしてaxiosでサーバーにpostする
       // user_idも後で付け足してね！
+      // サインイン情報のuser_idを使用
       const result = {
-        user_id: userId.user_id,
+        user_id: userId.id,
         accuracy: convertedAccuracy, // float
         wpm: wpm, // int
       };
       postGameData(result);
+      console.log(result);
     }
   }, [phase]);
 
