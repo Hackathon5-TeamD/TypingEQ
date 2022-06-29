@@ -9,8 +9,14 @@ import { useRanking } from "../../../hooks/useRanking";
 
 export const ResultPage = () => {
   // hooks
-  const { rankingArr1, rankingArr2, fetchData, currentPage, setCurrentPage } =
-    useRanking();
+  const {
+    rankingArr1,
+    rankingArr2,
+    fetchData,
+    currentPage,
+    setCurrentPage,
+    loading,
+  } = useRanking();
 
   const [timesFetchedArr2, setTimesFetchedArr2] = useState<number>(0);
 
@@ -26,7 +32,7 @@ export const ResultPage = () => {
    * ページ１、ページ２のテーブルを変数に入れる
    */
   const page1 =
-    currentPage === 1 && rankingArr1.length !== 0 ? (
+    currentPage === 1 && !loading ? (
       <RankingTable
         rankingArr={rankingArr1}
         currentPage={currentPage}
@@ -40,7 +46,7 @@ export const ResultPage = () => {
     );
 
   const page2 =
-    currentPage === 2 && rankingArr2.length !== 0 ? (
+    currentPage === 2 && !loading ? (
       <RankingTable
         rankingArr={rankingArr2}
         currentPage={currentPage}
@@ -50,7 +56,7 @@ export const ResultPage = () => {
         setTimesFetchedArr2={setTimesFetchedArr2}
       />
     ) : (
-      <h1>Loading...その２</h1>
+      <h1>Loading...</h1>
     );
 
   return (

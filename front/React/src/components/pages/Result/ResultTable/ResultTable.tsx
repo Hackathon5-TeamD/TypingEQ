@@ -3,10 +3,10 @@ import styles from "./ResultTable.module.css";
 import { TableHeader } from "./TableHeader/TableHeader";
 import { TableRow } from "./TableRows/TableRow";
 import { TableFooter } from "./TableFooter/TableFooter";
-import { mockData } from "../../../../types/ResultType";
+import { recordData } from "../../../../types/UserType";
 
 type Props = {
-  rankingArr: mockData[];
+  rankingArr: recordData[];
   currentPage: number;
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
   fetch: (page: number) => Promise<void>;

@@ -1,17 +1,18 @@
 from atexit import register
 import os
-from flask import Blueprint, request , jsonify
+from flask import Blueprint, request , jsonify, abort
 from model import Person, db, app
 from flask_bcrypt import generate_password_hash, check_password_hash 
-# from flask_jwt_extended import create_access_token
-# from flask_jwt_extended import get_jwt_identity
-# from flask_jwt_extended import jwt_required
-# from flask_jwt_extended import JWTManager
+from flask_jwt_extended import create_access_token
+from flask_jwt_extended import get_jwt_identity
+from flask_jwt_extended import jwt_required
+from flask_jwt_extended import JWTManager
 
 from flask_cors import cross_origin
 
-# app.config["JWT_SECRET_KEY"] = os.getenv("SECRET_KEY")
-# jwt = JWTManager(app)
+
+app.config["JWT_SECRET_KEY"] = os.getenv("SECRET_KEY")
+jwt = JWTManager(app)
 app.config["JSON_AS_ASCII"] = False
 
 user_module = Blueprint("user_module", __name__, url_prefix="/user")
@@ -42,7 +43,7 @@ def get_user():
 @cross_origin(supports_credentials=True)
 def post_user():
     payload = request.json
-    # access_token = create_access_token(identity=payload.get("user_name"))
+    access_token = create_access_token(identity=payload.get("user_name"))
     
     insert_data = Person(
         user_name = payload.get("user_name"),
@@ -62,6 +63,7 @@ def post_user():
 @cross_origin(supports_credentials=True)
 def login_user():
     payload = request.json
+    
     insert_data = Person(
         user_id = payload.get("user_id"),
         user_name = payload.get("user_name"),
@@ -69,15 +71,17 @@ def login_user():
 
     user = Person.query.filter_by(user_name=insert_data.user_name).first()
     if check_password_hash(user.password, insert_data.password):
-        # access_token = create_access_token(identity=user.user_name)
+        access_token = create_access_token(identity=user.user_name)
         
         return jsonify(
-            # access_token = access_token,
+            access_token = access_token,
             user_id = user.user_id,
             user_name = user.user_name
             )
     else:
-        return "nameかpass違うよ"
+        abort(400, "nameかpass違うよ")
+        # return jsonify(message = "nameかpass違うよ"), 400
+
 # @user_module.route("/protected", methods=["GET"])
 # @jwt_required()
 # def protected():

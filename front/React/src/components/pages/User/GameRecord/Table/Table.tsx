@@ -17,7 +17,7 @@ export const GameRecordTable = (props: Props) => {
         <TableHeader />
         <Table.Body>
           {recordArr.map((row, idx) => {
-            return <TableRow key={row.id} idx={idx} data={row} />;
+            return <TableRow key={idx} idx={idx} data={row} />;
           })}
         </Table.Body>
       </Table>

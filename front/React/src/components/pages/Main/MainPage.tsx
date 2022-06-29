@@ -20,7 +20,7 @@ export const MainPage = () => {
   const [isModalOpen, setModalOpen] = useState(false);
 
   // hooks
-  const { jaTerm, roTerm, fetchGame } = useGame();
+  const { jaTerm, roTerm, jaTheme, roTheme, fetchGame } = useGame();
   const fetchGameData = () => fetchGame();
 
   //-------------------------  タイピングhooks関連  ------------------------------------
@@ -64,13 +64,16 @@ export const MainPage = () => {
       stopTimer();
       // accuracy, wpmを小数点第1位までのnumberに変換
       const convertedAccuracy = parseFloat(accuracy.toFixed(1));
+
       // accuracy, wpmをオブジェクトにしてaxiosでサーバーにpostする
       // user_idも後で付け足してね！
+      // サインイン情報のuser_idを使用
       const result = {
         user_id: userId.user_id,
-        accuracy: convertedAccuracy, // float
+        accuracy_value: convertedAccuracy, // float
         wpm: wpm, // int
       };
+
       postGameData(result);
     }
   }, [phase]);
@@ -122,6 +125,8 @@ export const MainPage = () => {
   return (
     <div className={styles.gamePageWrapper}>
       <GameArea
+        jaTheme={jaTheme}
+        roTheme={roTheme}
         jaTerm={jaTerm}
         roTerm={roTerm}
         insertTyping={insertTyping}
