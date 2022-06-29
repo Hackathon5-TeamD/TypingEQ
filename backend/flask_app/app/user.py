@@ -1,6 +1,6 @@
 from atexit import register
 import os
-from flask import Blueprint, request , jsonify
+from flask import Blueprint, request , jsonify, abort
 from model import Person, db, app
 from flask_bcrypt import generate_password_hash, check_password_hash 
 from flask_jwt_extended import create_access_token
@@ -9,6 +9,7 @@ from flask_jwt_extended import jwt_required
 from flask_jwt_extended import JWTManager
 
 from flask_cors import cross_origin
+
 
 app.config["JWT_SECRET_KEY"] = os.getenv("SECRET_KEY")
 jwt = JWTManager(app)
@@ -78,7 +79,9 @@ def login_user():
             user_name = user.user_name
             )
     else:
-        return "nameかpass違うよ"
+        abort(400, "nameかpass違うよ")
+        # return jsonify(message = "nameかpass違うよ"), 400
+
 # @user_module.route("/protected", methods=["GET"])
 # @jwt_required()
 # def protected():

@@ -68,7 +68,11 @@ export const Login: VFC = memo(() => {
           localStorage.setItem("token", result.access_token);
           navigate("/gamestart");
         })
-        .catch((err) => console.log(err))
+        .catch((err) => {
+          setErrorMessage(
+            "ログインできませんでした。入力内容をお確かめください。"
+          );
+        })
         .finally(() => setIsLoading(false));
     } else {
       setErrorMessage("入力内容をお確かめください。");
