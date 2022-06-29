@@ -20,7 +20,7 @@ export const MainPage = () => {
   const [isModalOpen, setModalOpen] = useState(false);
 
   // hooks
-  const { jaTerm, roTerm, fetchGame } = useGame();
+  const { jaTerm, roTerm, jaTheme, roTheme, fetchGame } = useGame();
   const fetchGameData = () => fetchGame();
 
   //-------------------------  タイピングhooks関連  ------------------------------------
@@ -125,6 +125,8 @@ export const MainPage = () => {
   return (
     <div className={styles.gamePageWrapper}>
       <GameArea
+        jaTheme={jaTheme}
+        roTheme={roTheme}
         jaTerm={jaTerm}
         roTerm={roTerm}
         insertTyping={insertTyping}

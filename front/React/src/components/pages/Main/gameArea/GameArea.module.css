@@ -1,5 +1,6 @@
 .gameArea {
   width: 80%;
+  min-width: 800px;
   display: flex;
   flex-direction: column;
   justify-content: center;
