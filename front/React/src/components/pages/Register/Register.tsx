@@ -15,7 +15,7 @@ type User = {
   user_id: number;
   user_name: string;
   // joined_date: Date;
-  token: string;
+  access_token: string;
   // effects_UNSTABLE: AtomEffect<any>[];
 };
 
@@ -32,7 +32,7 @@ export const userLoginState = atom<User>({
     id: 0,
     user_id: 0,
     user_name: "",
-    token: "",
+    access_token: "",
   },
   effects_UNSTABLE: [persistAtom],
 });
@@ -89,9 +89,6 @@ export const Register: VFC = memo(() => {
         {
           user_name: userName,
           password: password,
-          // 本来ならuser_nameとpasswordだけ送れば大丈夫
-          // joined_date: new Date(),
-          // token: "aaaaaaaa",
         }
       );
       return result.data;
@@ -113,7 +110,7 @@ export const Register: VFC = memo(() => {
               // atomの更新関数をここで読んで、Recoilでデータを保存
               setLogin(result);
               console.log(result);
-              localStorage.setItem("token", result.token);
+              localStorage.setItem("token", result.access_token);
               navigate("/gamestart");
             })
             .catch((err) => console.log(err))

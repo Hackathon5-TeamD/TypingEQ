@@ -14,7 +14,7 @@ type User = {
   user_id: number;
   user_name: string;
   // joined_date: Date;
-  token: string;
+  access_token: string;
 };
 
 export const Login: VFC = memo(() => {
@@ -45,8 +45,6 @@ export const Login: VFC = memo(() => {
         {
           user_name: userName,
           password: password,
-          // 本来ならuser_nameとpasswordだけ送れば大丈夫
-          token: "aaaaaaaa",
         }
       );
       return result.data;
@@ -67,7 +65,7 @@ export const Login: VFC = memo(() => {
           // atomの更新関数でデータを保存
           setLogin(result);
           console.log(result);
-          localStorage.setItem("token", result.token);
+          localStorage.setItem("token", result.access_token);
           navigate("/gamestart");
         })
         .catch((err) => console.log(err))
