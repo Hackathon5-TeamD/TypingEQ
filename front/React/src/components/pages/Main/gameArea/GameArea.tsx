@@ -4,6 +4,8 @@ import "react-simple-keyboard/build/css/index.css";
 import Keyboard from "react-simple-keyboard";
 
 type Props = {
+  jaTheme: string;
+  roTheme: string;
   jaTerm: string;
   roTerm: string;
   insertTyping: (char?: string | undefined) => void;
@@ -15,11 +17,14 @@ type Props = {
 
 const physicalKeyboardHighlight = true;
 const preventMouseDownDefault = true;
+const newLineOnEnter = false;
 
 export const GameArea = (props: Props) => {
   return (
     <div className={styles.gameArea}>
       <Screen
+        jaTheme={props.jaTheme}
+        roTheme={props.roTheme}
         jaTerm={props.jaTerm}
         roTerm={props.roTerm}
         insertTyping={props.insertTyping}
@@ -31,6 +36,7 @@ export const GameArea = (props: Props) => {
       <Keyboard
         physicalKeyboardHighlight={physicalKeyboardHighlight}
         preventMouseDownDefault={preventMouseDownDefault}
+        newLineOnEnter={newLineOnEnter}
       />
     </div>
   );
