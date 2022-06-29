@@ -11,13 +11,11 @@ export const useGame = () => {
   const fetchGame = () => {
     setAlsertLoading(true);
     axios
-      .get(`${Url}/terminologie`)
+      .get(`${Url}/terminologie2`)
       .then((res) => {
-        console.log(res.data);
-
         // サーバーから取ってきた問題をstate(配列)に入れる
-        setRoTerm(res.data[0]["description_ro"]);
-        setJaTerm(res.data[0]["description_ja"]);
+        setRoTerm(res.data["description_ro"]);
+        setJaTerm(res.data["description_ja"]);
       })
       .catch((err) => {
         console.log(err);

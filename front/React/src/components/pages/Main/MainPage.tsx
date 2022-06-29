@@ -7,7 +7,7 @@ import useTypingGame from "react-typing-game-hook";
 import { useGame } from "../../../hooks/useGame";
 import { useState, useEffect } from "react";
 import { StartAlert } from "./StartAlert/StartAlert";
-import { postGameData } from "../../../api/PostGameData";
+import { postGameData } from "../../../api/postGameData";
 import { useRecoilValue } from "recoil";
 import { userLoginState } from "../Register/Register";
 
