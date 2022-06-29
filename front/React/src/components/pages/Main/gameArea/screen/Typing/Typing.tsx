@@ -1,6 +1,7 @@
 import styles from "./Typing.module.css";
 
 type Props = {
+  title: string;
   roTerm: string;
   insertTyping: (char?: string | undefined) => void;
   resetTyping: () => void;
@@ -10,14 +11,18 @@ type Props = {
 };
 
 export const TypingGameComponent = (props: Props) => {
-  const { insertTyping, resetTyping, deleteTyping, chars, charsState } = props;
+  const { insertTyping, resetTyping, deleteTyping, chars, charsState, title } =
+    props;
 
   return (
     <h1
       className={styles.roTerm}
       onKeyDown={(e) => {
         const key = e.key;
-        if (key === "Escape") {
+
+        if (e.code === "Space" || e.code === "Enter") {
+          e.preventDefault();
+        } else if (key === "Escape") {
           resetTyping();
         } else if (key === "Backspace") {
           deleteTyping(false);
