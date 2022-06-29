@@ -20,7 +20,7 @@ export const TypingGameComponent = (props: Props) => {
       onKeyDown={(e) => {
         const key = e.key;
 
-        if (e.code === "Space" || e.code === "Enter") {
+        if (e.code === "Space" || e.code === "Enter" || e.code === "CapsLock") {
           e.preventDefault();
         } else if (key === "Escape") {
           resetTyping();
