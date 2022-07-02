@@ -8,14 +8,8 @@ import axios from "axios";
 import { userLoginState } from "../Register/Register";
 import { useSetRecoilState } from "recoil";
 import { useNavigate } from "react-router-dom";
-// バックエンドからのレスポンスの型定義
-type User = {
-  id: number;
-  user_id: number;
-  user_name: string;
-  // joined_date: Date;
-  access_token: string;
-};
+// Register時のUser型読み込み
+import { User } from "../../../types/RegisterType";
 
 export const Login: VFC = memo(() => {
   const navigate = useNavigate();
