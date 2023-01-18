@@ -22,17 +22,6 @@ services:
     # ホットリロードを行う設定
     environment:
       - CHOKIDAR_USEPOLLING=true
-    networks:
-      my_network:
-        ipv4_address: 192.168.0.101
 
 volumes:
   socket:
-
-networks:
-  my_network:
-    driver: bridge
-    ipam:
-     driver: default
-     config:
-       - subnet: 192.168.0.0/24

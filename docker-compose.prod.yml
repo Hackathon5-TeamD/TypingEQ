@@ -5,7 +5,9 @@ services:
   flask:
     container_name: flask
     depends_on:
-      - db
+      db:
+        # dbのヘルスチェックが終わってからappを起動させる
+        condition: service_healthy
     build:
       context: .
       dockerfile: ./backend/flask_app/Dockerfile
@@ -19,8 +21,6 @@ services:
       - ./gunicorn_socket:/tmp/gunicorn_socket/gunicorn_flask.sock
     working_dir: /var/www/scripts
     command: bash -c "./run.sh"
-    networks:
-      - my_network
     environment:
       TZ: "Asia/Tokyo"
     env_file:
@@ -36,14 +36,21 @@ services:
     expose:
       - "3306"
     volumes:
-      - ./backend/DB/docker-entrypoint:/docker-entrypoint-initdb.d
       - ./log/db:/var/log/mysql:cached
-    networks:
-      - my_network
     environment:
       TZ: "Asia/Tokyo"
     env_file:
       - .env.dev
+    healthcheck:
+      test: mysqladmin ping -h 127.0.0.1 -u$$MYSQL_USER -p$$MYSQL_PASSWORD
+      # ヘルスチェックのインターバルは10秒
+      interval: 10s
+      # タイムアウト時間は10秒
+      timeout: 10s
+      # リトライ回数は3回
+      retries: 3
+      # ヘルスチェックが失敗しても無視する時間は30秒
+      start_period: 30s
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -55,31 +62,21 @@ services:
       - "4000:80"
     volumes:
       - ./phpmyadmin/sessions:/sessions
-    networks:
-      - my_network
     
   web:
     container_name: NginX
-    image: nginx:latest
-    command: nginx -g "daemon off;"
+    build:
+      context: .
+      dockerfile: ./web/Dockerfile-NginX
     ports:
       - "80:80"
-      - "443:443"
     volumes:
       - ./front/React/build:/usr/share/nginx/html
       - ./web/conf:/etc/nginx/conf.d
-      - ../ssl/certs/:/etc/pki/tls/certs/
-      - ../ssl/private/:/etc/pki/tls/private/
       - ./gunicorn_socket:/tmp/gunicorn_socket/gunicorn_flask.sock
     links:
       - flask
     restart: always
-    networks:
-      - my_network
     
 volumes:
   socket:
-
-networks:
-  my_network:
-    driver: bridge
