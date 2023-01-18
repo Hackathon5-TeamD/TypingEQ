@@ -8,7 +8,7 @@ rm -rf backend/flask_app/app/migrations
 rm -rf backend/flask_app/app/scripts
 
 rm -rf front/React/node_modules
-rm -rf front/React/build
+# rm -rf front/React/build
 
 rm -rf phpmyadmin
 rm -rf gunicorn_socket
