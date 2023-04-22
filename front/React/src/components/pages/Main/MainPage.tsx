@@ -63,16 +63,26 @@ export const MainPage = () => {
       setModalOpen(true);
       stopTimer();
       // accuracy, wpmを小数点第1位までのnumberに変換
-      const convertedAccuracy = parseFloat(accuracy.toFixed(1));
+      // もし正解率/wpmがNaNの場合は0を設定
+      let convertedAccuracy = parseFloat(accuracy.toFixed(1));
+      if (!convertedAccuracy) {
+        convertedAccuracy = 0;
+      }
+      if (!wpm) {
+        wpm = 0;
+      }
 
       // accuracy, wpmをオブジェクトにしてaxiosでサーバーにpostする
       // user_idも後で付け足してね！
       // サインイン情報のuser_idを使用
+
       const result = {
         user_id: userId.user_id,
         accuracy_value: convertedAccuracy, // float
         wpm: wpm, // int
       };
+
+      console.log(result);
 
       postGameData(result);
     }
